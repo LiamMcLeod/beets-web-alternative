@@ -3,6 +3,8 @@ Beets Web Alternative
 
 Just a simple front-end for beets using the Spectre CSS framework, I've kept changes to the original Backbone code to a minimum as there's no use trying to fix something which isn't broken, it does the job and works well, why change it.
 
+Therefore much of the credit goes to [beetbox](https://github.com/beetbox) and the contributors to the original repo [beets](https://github.com/beetbox/beets)
+
 Install
 ===
 
@@ -29,3 +31,4 @@ Check out the [Getting Started]( http://beets.readthedocs.org/page/guides/main.h
 Ready to go? Use the command:
 
     $ beet web
+
