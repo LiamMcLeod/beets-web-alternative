@@ -405,14 +405,13 @@ class WebPlugin(BeetsPlugin):
 
             # Start the web application.
             #!remove when done
-            app.config['ENV'] = 'development'
-            app.config['DEBUG'] = True
+            #app.config['ENV'] = 'development'
+            #app.config['DEBUG'] = True
             #!remove when done
             app.run(host=self.config['host'].as_str(),
                     port=self.config['port'].get(int),
                     threaded=True, 
-                    #!uncomment when done
-                    #debug=opts.debug,
+                    debug=opts.debug,
                     )
         cmd.func = func
         return [cmd]
