@@ -431,7 +431,7 @@ $(function () {
         },
         playItem: function (item) {
             // console.log(item);
-            var url = 'item/' + item.get('id') + '/file';
+            var url = 'api/' + item.get('id') + '/file';
             $('#player audio').attr('src', url);
             // Controls playback
             $('#player audio').get(0).play();
