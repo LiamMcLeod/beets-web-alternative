@@ -188,8 +188,12 @@ class EverythingConverter(PathConverter):
 
 
 # Flask setup.
+#* http://flask.pocoo.org/docs/0.12/api/
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__,
+                #static_folder='public',
+                #template_folder='views',
+                )
 app.url_map.converters['idlist'] = IdListConverter
 app.url_map.converters['query'] = QueryConverter
 app.url_map.converters['everything'] = EverythingConverter
@@ -202,20 +206,20 @@ def before_request():
 
 # Items.
 
-@app.route('/item/<idlist:ids>')
+@app.route('/api/<idlist:ids>')
 @resource('items')
 def get_item(id):
     return g.lib.get_item(id)
 
 
-@app.route('/item/')
-@app.route('/item/query/')
+@app.route('/api/')
+@app.route('/api/query/')
 @resource_list('items')
 def all_items():
     return g.lib.items()
 
 
-@app.route('/item/<int:item_id>/file')
+@app.route('/api/<int:item_id>/file')
 def item_file(item_id):
     item = g.lib.get_item(item_id)
 
@@ -249,13 +253,13 @@ def item_file(item_id):
     return response
 
 
-@app.route('/item/query/<query:queries>')
+@app.route('/api/query/<query:queries>')
 @resource_query('items')
 def item_query(queries):
     return g.lib.items(queries)
 
 
-@app.route('/item/path/<everything:path>')
+@app.route('/api/path/<everything:path>')
 def item_at_path(path):
     query = beets.library.PathQuery('path', path.encode('utf-8'))
     item = g.lib.items(query).get()
@@ -265,7 +269,7 @@ def item_at_path(path):
         return flask.abort(404)
 
 
-@app.route('/item/values/<string:key>')
+@app.route('/api/values/<string:key>')
 def item_unique_field_values(key):
     sort_key = flask.request.args.get('sort_key', key)
     try:
@@ -400,9 +404,16 @@ class WebPlugin(BeetsPlugin):
                 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
             # Start the web application.
+            #!remove when done
+            app.config['ENV'] = 'development'
+            app.config['DEBUG'] = True
+            #!remove when done
             app.run(host=self.config['host'].as_str(),
                     port=self.config['port'].get(int),
-                    debug=opts.debug, threaded=True)
+                    threaded=True, 
+                    #!uncomment when done
+                    #debug=opts.debug,
+                    )
         cmd.func = func
         return [cmd]
 

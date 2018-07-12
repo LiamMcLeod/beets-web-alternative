@@ -207,7 +207,7 @@ $(function () {
         itemQuery: function (query) {
             if (query) {
                 var queryURL = query.split(/\s+/).map(encodeURIComponent).join('/');
-                $.getJSON('/item/query/' + queryURL, function (data) {
+                $.getJSON('/api/query/' + queryURL, function (data) {
                     var models = _.map(
                         data['results'],
                         function (d) {
@@ -222,7 +222,7 @@ $(function () {
                 // Library Request
                 /** Very janky method but fuck it it works
                  *  as /item returns a different model to expected */
-                $.getJSON('/item/query/%20', function (data) {
+                $.getJSON('/api/query/%20', function (data) {
                     var models = _.map(
                         data['results'],
                         function (d) {
@@ -431,7 +431,7 @@ $(function () {
         },
         playItem: function (item) {
             // console.log(item);
-            var url = 'api/' + item.get('id') + '/file';
+            var url = '../api/' + item.get('id') + '/file';
             $('#player audio').attr('src', url);
             // Controls playback
             $('#player audio').get(0).play();
